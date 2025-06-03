@@ -6,3 +6,8 @@ spacy
 requests
 streamlit
 dash
+fastapi
+uvicorn
+plotly
+textblob
+prometheus-client

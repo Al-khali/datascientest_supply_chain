@@ -44,7 +44,8 @@ Le projet doit suivre le cahier des charges Sephora (voir cahier_des_charges_sam
 - [x] Développement du pipeline de nettoyage, anonymisation et structuration avancée des données collectées (clean_reviews.py)
 - [x] Implémentation de l’analyse de sentiment et extraction des motifs d’insatisfaction (NLP)
 - [x] Développement du dashboard interactif (Streamlit/Dash) avec filtres et exports
-- [ ] Création de l’API REST pour intégration SI
+- [x] Création de l’API REST pour intégration SI
+- [x] Dockerisation, CI/CD, monitoring
 
 ## Tests & Lancement
 - [ ] Réaliser les tests unitaires, intégration, utilisateurs
