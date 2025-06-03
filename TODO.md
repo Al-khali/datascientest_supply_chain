@@ -1,3 +1,6 @@
+# Référence projet :
+Le projet doit suivre le cahier des charges Sephora (voir cahier_des_charges_sample.md) comme fil conducteur, en cohérence avec les exigences, livrables et KPIs définis, ainsi que tous les paramètres précédemment vus.
+
 # TODO - Projet Satisfaction client
 
 ## Cadrage & Discovery
@@ -37,6 +40,11 @@
 - [ ] Dockeriser le projet
 - [ ] Automatiser le déploiement (CI/CD)
 - [ ] Mettre en place le monitoring
+- [x] Développement du pipeline de collecte réelle d’avis clients (Trustpilot/API) avec stockage structuré (CSV).
+- [x] Développement du pipeline de nettoyage, anonymisation et structuration avancée des données collectées (clean_reviews.py)
+- [x] Implémentation de l’analyse de sentiment et extraction des motifs d’insatisfaction (NLP)
+- [x] Développement du dashboard interactif (Streamlit/Dash) avec filtres et exports
+- [ ] Création de l’API REST pour intégration SI
 
 ## Tests & Lancement
 - [ ] Réaliser les tests unitaires, intégration, utilisateurs
@@ -47,3 +55,15 @@
 - [ ] Préparer la soutenance (slides, démo)
 - [ ] Recueillir les feedbacks
 - [ ] Planifier les évolutions
+
+# Suivi des étapes projet (aligné mentor Dan)
+- [ ] Étape 0 : Cadrage (présentation équipe, planification)
+- [ ] Étape 1 : Rapport sources de données + exemples collectés
+- [ ] Étape 2 : Cahier des charges, veille technologique, SWOT
+- [ ] Étape 3 : KPIs & Roadmap détaillée
+- [ ] Étape 4 : Organisation, ingestion, bases SQL/NoSQL, schéma
+- [ ] Étape 5 : Algorithme ML/DL, MLFlow, mesure dérive
+- [ ] Étape 6 : API, Dockerisation, microservices
+- [ ] Étape 7 : Déploiement, monitoring, features prod
+
+> À chaque étape, le fichier TODO sera mis à jour pour refléter l’avancement, dans une démarche professionnelle d’expert data engineer/data scientist.

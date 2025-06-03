@@ -1,62 +1,37 @@
 # Roadmap du projet "Satisfaction client dans la supply chain"
 
-## Juin 2025
-- **Semaine 1-2 : Cadrage & Discovery**
-  - Comprendre la problématique métier
-  - Réaliser des entretiens/questionnaires
-  - Définir les KPIs (3-4)
-  - Cartographier les ressources et besoins
-  - Livrables : Guide d’entretien, expérience map, liste des KPIs
+## Nouvelle feuille de route alignée sur les attentes du mentor (Dan)
 
-- **Semaine 3 : Veille technologique & SWOT**
-  - Benchmark des solutions existantes (concurrentes, IA, articles)
-  - Analyse réglementaire (RGPD, etc.)
-  - Réaliser une analyse SWOT
-  - Livrables : Benchmark, veille, SWOT (slide synthétique)
+### Étape 0 : Cadrage
+- Introduction équipe, présentation du cadre, planification des étapes
 
-## Juillet 2025
-- **Semaine 1 : Conception du MVP**
-  - Lister/prioriser les fonctionnalités du MVP
-  - Définir le schéma de la base de données
-  - Prendre en compte contraintes RSE, réglementaires, accessibilité
-  - Livrables : Spécification du MVP, schéma de base de données
+### Étape 1 : Découverte des sources de données
+- Exploration des API, pages web, structure des données
+- Rapport sur les sources et exemples de données collectées
 
-- **Semaine 2 : Challenger le MVP**
-  - Identifier les risques (qualité, éthique, techniques)
-  - Définir la stratégie de pricing (si besoin)
-  - Prévoir les besoins de formation/recrutement
-  - Livrables : Cartographie des risques, plan de prévention
+### Étape 2 : Cahier des charges, veille technologique & SWOT (Semaine 2)
+- Rédaction du cahier des charges détaillé
+- Veille technologique
+- Analyse SWOT complète
 
-- **Semaine 3-4 : Développement technique (Phase 1)**
-  - Web scraping des avis/notes/feedbacks
-  - Organisation de la donnée (base, pipeline ETL)
-  - Livrables : Fichier explicatif, exemple JSON, schéma BDD
+### Étape 3 : Indicateurs & Roadmap (Sprint 9)
+- Définition des KPIs
+- Roadmap détaillée et jalons de suivi
 
-## Août 2025
-- **Semaine 1-2 : Développement technique (Phase 2)**
-  - Implémentation du modèle ML (classification/sentiment analysis)
-  - Création du dashboard de restitution
-  - Livrables : Modèle ML, dashboard, documentation
+### Étape 4 : Organisation de la donnée & Ingestion (Post Sprint 10)
+- Mise en place de bases de données relationnelle (SQL) et NoSQL
+- Schéma d’architecture des données et relations
 
-- **Semaine 3 : Mise en production**
-  - Création de l’API (FastAPI/Flask)
-  - Dockerisation du projet
-  - Livrables : API fonctionnelle, scripts Docker
+### Étape 5 : Machine/Deep Learning (Sprint 13)
+- Développement des algorithmes ML/DL
+- Versionning des modèles avec MLFlow
+- Mesure de la dérive des données
 
-- **Semaine 4 : CI/CD & Monitoring**
-  - Automatisation du déploiement (Jenkins, Ansible, etc.)
-  - Mise en place du monitoring (Prometheus, Grafana)
-  - Livrables : Scripts CI/CD, tableaux de bord de monitoring
+### Étape 6 : API & Virtualisation (Post Sprint 15)
+- Création d’une API pour le modèle et la base de données
+- Virtualisation avec Docker (microservices)
 
-## Septembre 2025
-- **Semaine 1 : Tests & Lancement**
-  - Tests unitaires, intégration, utilisateurs
-  - Préparation des supports de formation et de communication
-  - Lancement de la solution
-  - Livrables : Rapport de tests, supports de formation
-
-- **Semaine 2 : Soutenance & Amélioration continue**
-  - Préparation de la soutenance (slides, démo)
-  - Recueil des feedbacks
-  - Planification des évolutions
-  - Livrables : Slides de soutenance, rapport final, roadmap d’évolution
+### Étape 7 : Déploiement & Monitoring (Post Sprint 18)
+- Déploiement de l’infrastructure
+- Monitoring avec Prometheus & Grafana
+- Ajout de nouvelles features et suivi en production
