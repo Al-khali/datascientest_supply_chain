@@ -3,7 +3,7 @@
 Script de démarrage automatisé pour la plateforme
 Analyse de Satisfaction Client Supply Chain
 
-Auteur: Data Engineer / Data Scientist Expert
+Auteur: khalid
 Date: 03/06/2025
 """
 

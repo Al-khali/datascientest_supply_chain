@@ -3,7 +3,7 @@
 Script d'installation et de configuration automatisée du projet
 Analyse de Satisfaction Client Supply Chain - Niveau Expert
 
-Auteur: Data Engineer / Data Scientist Expert
+Auteur: khalid
 Date: 03/06/2025
 """
 

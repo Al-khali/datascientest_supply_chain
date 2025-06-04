@@ -1,0 +1,115 @@
+# Configuration pour black (formatage de code)
+[tool.black]
+line-length = 100
+target-version = ['py38', 'py39', 'py310', 'py311', 'py312']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # Directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+# Configuration pour isort (tri des imports)
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 100
+known_first_party = ["core", "infrastructure", "interfaces"]
+known_third_party = [
+    "fastapi", "pydantic", "pandas", "numpy", "sklearn", 
+    "transformers", "spacy", "streamlit", "plotly"
+]
+sections = ["FUTURE", "STDLIB", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
+
+# Configuration pour mypy (vérification de types)
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+
+# Modules externes sans types
+[[tool.mypy.overrides]]
+module = [
+    "transformers.*",
+    "spacy.*", 
+    "bertopic.*",
+    "wordcloud.*",
+    "selenium.*",
+    "beautifulsoup4.*",
+    "plotly.*",
+    "streamlit.*"
+]
+ignore_missing_imports = true
+
+# Configuration pour pytest
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = [
+    "--strict-markers",
+    "--strict-config", 
+    "--verbose",
+    "--tb=short",
+    "--cov=core",
+    "--cov=infrastructure", 
+    "--cov=interfaces",
+    "--cov-report=term-missing",
+    "--cov-report=html:htmlcov",
+    "--cov-report=xml"
+]
+testpaths = ["tests"]
+markers = [
+    "unit: Unit tests",
+    "integration: Integration tests", 
+    "e2e: End-to-end tests",
+    "slow: Slow tests",
+    "ml: Machine learning tests"
+]
+asyncio_mode = "auto"
+
+# Configuration pour coverage
+[tool.coverage.run]
+source = ["core", "infrastructure", "interfaces"]
+omit = [
+    "*/tests/*",
+    "*/test_*.py",
+    "*/__pycache__/*",
+    "*/migrations/*",
+    "*/venv/*",
+    "*/.venv/*"
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if __name__ == .__main__.:",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if False:",
+    "class .*\\(Protocol\\):",
+    "@(abc\\.)?abstractmethod"
+]
+
+[build-system]
+requires = ["setuptools>=45", "wheel", "setuptools_scm[toml]>=6.2"]
+build-backend = "setuptools.build_meta"
