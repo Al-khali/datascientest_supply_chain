@@ -169,3 +169,15 @@ db-migrate:
 db-seed:
 	@echo "🌱 Initialisation des données..."
 	# Ajoutez vos commandes d'initialisation
+
+# CI/CD Setup
+setup-secrets:
+	@echo "🔐 Configuration des secrets CI/CD..."
+	@echo "Veuillez ajouter ces secrets à GitHub Actions:"
+	@echo "1. CODECOV_TOKEN: Token from Codecov.io"
+	@echo "2. STAGING_SERVER: IP/hostname du serveur de staging"
+	@echo "3. STAGING_USER: Utilisateur SSH pour le serveur de staging"
+	@echo "4. STAGING_SSH_KEY: Clé privée SSH pour le serveur de staging"
+	@echo "5. MLFLOW_TRACKING_URI: URI du serveur MLflow"
+	@echo "6. MLFLOW_USER: Utilisateur MLflow"
+	@echo "7. MLFLOW_PASSWORD: Mot de passe MLflow"
