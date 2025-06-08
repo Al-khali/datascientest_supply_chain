@@ -11,42 +11,35 @@ load_dotenv()
 def main():
     print("Starting scrapers...")
     
-    # Initialize scrapers with API keys
-    trustpilot = TrustpilotScraper(api_key=os.getenv("TRUSTPILOT_API_KEY"))
+    # Initialize scrapers
+    trustpilot = TrustpilotScraper()
     google = GoogleScraper(api_key=os.getenv("GOOGLE_API_KEY"))
-    twitter = TwitterScraper(bearer_token=os.getenv("TWITTER_BEARER_TOKEN"))
+    twitter = TwitterScraper()
     
     # Scrape Sephora reviews from Trustpilot
-    sephora_business_id = "5a4b4b5e0000ff00059b6f5f"  # Sephora's Trustpilot business ID
-    trustpilot_raw = trustpilot.fetch_reviews(business_unit_id=sephora_business_id, limit=100)
-    trustpilot_parsed = [trustpilot.parse_review(review) for review in trustpilot_raw]
+    print("Scraping Trustpilot...")
+    trustpilot_reviews = trustpilot.fetch_reviews(business_name="sephora", pages=3)
+    print(f"Fetched {len(trustpilot_reviews)} reviews from Trustpilot")
     
     # Scrape Sephora reviews from Google
-    sephora_place_id = "ChIJq6qqqqqqqRkRwA2Z2Z2Z2Z2Y"  # Sephora's Google Place ID
-    google_raw = google.fetch_reviews(place_id=sephora_place_id, limit=100)
-    google_parsed = [google.parse_review(review) for review in google_raw]
+    print("Scraping Google...")
+    google_reviews = google.fetch_reviews(place_id="ChIJq6qqqqqqqRkRwA2Z2Z2Z2Z2Y", limit=100)
+    print(f"Fetched {len(google_reviews)} reviews from Google")
     
     # Scrape Sephora mentions from Twitter
-    twitter_raw = twitter.fetch_reviews("Sephora", limit=100)
+    print("Scraping Twitter...")
+    twitter_mentions = twitter.fetch_reviews("Sephora", pages=5)
+    print(f"Fetched {len(twitter_mentions)} mentions from Twitter")
     
     # Combine all reviews
-    all_reviews = trustpilot_parsed + google_parsed + twitter_raw
+    all_reviews = trustpilot_reviews + google_reviews + twitter_mentions
     
     # Save to JSON
-    trustpilot.save_to_json(trustpilot_parsed, "sephora_trustpilot")
-    google.save_to_json(google_parsed, "sephora_google")
-    twitter.save_to_json(twitter_raw, "sephora_twitter")
+    trustpilot.save_to_json(trustpilot_reviews, "sephora_trustpilot")
+    google.save_to_json(google_reviews, "sephora_google")
+    twitter.save_to_json(twitter_mentions, "sephora_twitter")
     
-    # Store to databases
-    trustpilot.store_to_db(trustpilot_parsed)
-    google.store_to_db(google_parsed)
-    twitter.store_to_db(twitter_raw)
-    
-    print(f"Scraped {len(trustpilot_parsed)} reviews from Trustpilot")
-    print(f"Scraped {len(google_parsed)} reviews from Google")
-    print(f"Scraped {len(twitter_raw)} mentions from Twitter")
-    print(f"Total {len(all_reviews)} items stored in databases")
-    
+    print(f"Total {len(all_reviews)} items stored in JSON files")
     print("Scraping completed successfully")
 
 if __name__ == "__main__":

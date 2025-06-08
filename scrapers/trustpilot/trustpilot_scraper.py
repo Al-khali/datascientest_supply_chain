@@ -1,43 +1,79 @@
 import requests
+from bs4 import BeautifulSoup
+import json
+from datetime import datetime
 from scrapers.base_scraper import BaseScraper
+import time
+import random
 
 class TrustpilotScraper(BaseScraper):
-    def __init__(self, api_key: str):
+    def __init__(self):
         super().__init__("trustpilot")
-        self.api_key = api_key
-        self.base_url = "https://api.trustpilot.com/v1/business-units"
+        self.base_url = "https://www.trustpilot.com"
         self.headers = {
-            "apikey": self.api_key,
-            "Content-Type": "application/json"
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
         }
         
-    def fetch_reviews(self, business_unit_id: str, limit: int = 100) -> list:
-        """Fetch reviews from Trustpilot API"""
+    def fetch_reviews(self, business_name: str, pages: int = 3) -> list:
+        """Scrape reviews from Trustpilot without API"""
         reviews = []
-        url = f"{self.base_url}/{business_unit_id}/reviews"
-        params = {
-            "perPage": min(limit, 100),
-            "orderBy": "createdat.desc"
-        }
+        url = f"{self.base_url}/review/{business_name}"
         
-        try:
-            response = requests.get(url, headers=self.headers, params=params)
-            response.raise_for_status()
-            data = response.json()
-            reviews = data.get("reviews", [])
-        except Exception as e:
-            print(f"Error fetching Trustpilot reviews: {e}")
-            
+        for page in range(1, pages + 1):
+            page_url = f"{url}?page={page}"
+            try:
+                response = requests.get(page_url, headers=self.headers)
+                response.raise_for_status()
+                soup = BeautifulSoup(response.text, 'html.parser')
+                
+                # Find review elements
+                review_elements = soup.select('div[data-service-review]')
+                for element in review_elements:
+                    review_data = self.parse_review(element)
+                    if review_data:
+                        reviews.append(review_data)
+                
+                # Random delay to avoid rate limiting
+                time.sleep(random.uniform(1, 3))
+                
+            except Exception as e:
+                print(f"Error scraping Trustpilot page {page}: {e}")
+                continue
+                
         return reviews
         
-    def parse_review(self, review_data: dict) -> dict:
-        """Parse Trustpilot review data into our schema"""
-        return {
-            "source": "trustpilot",
-            "source_id": review_data.get("id"),
-            "author": review_data.get("consumer", {}).get("displayName"),
-            "rating": review_data.get("stars"),
-            "content": review_data.get("text"),
-            "date": review_data.get("createdAt"),
-            "product": review_data.get("brand", {}).get("name")
-        }
+    def parse_review(self, element) -> dict:
+        """Parse HTML review element into structured data"""
+        try:
+            # Extract review ID
+            review_id = element.get('data-service-review') or ""
+            
+            # Extract author
+            author_element = element.select_one('span.typography_heading-xxs__QKBS8')
+            author = author_element.text.strip() if author_element else "Anonymous"
+            
+            # Extract rating
+            rating_element = element.select_one('div.star-rating_starRating__4rrcf img')
+            rating = int(rating_element.get('alt', '0')[0]) if rating_element else 0
+            
+            # Extract content
+            content_element = element.select_one('p.typography_body-l__KUYFJ')
+            content = content_element.text.strip() if content_element else ""
+            
+            # Extract date
+            date_element = element.select_one('time')
+            date_str = date_element.get('datetime') if date_element else ""
+            date = datetime.fromisoformat(date_str) if date_str else datetime.now()
+            
+            return {
+                "source": "trustpilot",
+                "source_id": review_id,
+                "author": author,
+                "rating": rating,
+                "content": content,
+                "date": date.isoformat(),
+                "product": "Sephora"
+            }
+        except Exception as e:
+            print(f"Error parsing review: {e}")
+            return None

@@ -11,19 +11,18 @@ class BaseScraper(abc.ABC):
         os.makedirs(self.data_dir, exist_ok=True)
         
     @abc.abstractmethod
-    def fetch_reviews(self, product: str, limit: int = 100) -> list[Dict[str, Any]]:
+    def fetch_reviews(self, *args, **kwargs) -> list:
         """Fetch reviews from the source API or website"""
         pass
         
-    def save_to_json(self, reviews: list, product: str):
-        """Save reviews to JSON file"""
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        filename = f"{product}_{timestamp}.json"
-        filepath = os.path.join(self.data_dir, filename)
+    def save_to_json(self, data: list, filename: str):
+        """Save data to JSON file"""
+        filepath = os.path.join(self.data_dir, f"{filename}.json")
         
         with open(filepath, 'w') as f:
-            json.dump(reviews, f, indent=2)
+            json.dump(data, f, indent=2)
             
+        print(f"Saved {len(data)} items to {filepath}")
         return filepath
         
     def store_to_db(self, reviews: list):
