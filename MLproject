@@ -1,0 +1,5 @@
+name: supply-satisfaction-ai
+
+entry_points:
+  log_metrics:
+    command: "python scripts/log_metrics.py"
